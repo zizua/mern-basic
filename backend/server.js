@@ -46,6 +46,17 @@ app.delete('/api/products/:id', async (req, res) => {
   }
 });
 
+// 5. create endpoint to get all products
+app.get('/api/products', async (req, res) => {
+  try {
+    const products = await Product.find({}); // get all products from the database
+    console.log('Products fetched successfully!');
+    res.status(200).json({ success: true, data: products });
+  } catch (error) {
+    console.log('Error fetching products:', error.message);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
 
 // console.log(process.env.MONGO_URI);
 
