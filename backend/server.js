@@ -58,6 +58,21 @@ app.get('/api/products', async (req, res) => {
   }
 });
 
+// 6. create endpoint to update a product
+app.put('/api/products/:id', async (req, res) => {
+  const { id } = req.params; // get the id from the url
+  const product = req.body; // get the product data from the request body
+
+  try {
+    const updatedProduct = await Product.findByIdAndUpdate(id, product, { new: true }); // update the product in the database
+    console.log(`Product id: ${id} successfully updated!`);
+    res.status(200).json({ success: true, message: 'Product updated successfully' });
+  } catch (error) {
+    console.log('Error updating product:', error.message);
+    res.status(404).json({ success: false, message: 'Product not found' });
+  }
+});
+
 // console.log(process.env.MONGO_URI);
 
 // 1. run the server
